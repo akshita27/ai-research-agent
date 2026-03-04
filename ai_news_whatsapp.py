@@ -30,7 +30,7 @@ RSS_FEEDS = [
 
 HOURS_LOOKBACK = 24   # fetch news from last N hours
 MAX_PER_FEED   = 5    # max articles to pull per feed
-TOP_N_STORIES  = 6    # how many stories to include in digest
+TOP_N_STORIES  = 3    # how many stories to include in digest
 
 
 # ─── FETCH ────────────────────────────────────────────────────────────────────
