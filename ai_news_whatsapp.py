@@ -74,30 +74,24 @@ def summarise_with_claude(articles: list[dict]) -> str:
         for i, a in enumerate(articles)
     ])
 
-    prompt = f"""You are an AI news curator for a senior software engineer who wants to stay ahead in the AI/ML space.
+    prompt = f"""You are an AI news curator for a senior software engineer.
 
-From the articles below, select the {TOP_N_STORIES} most impactful stories from the past 24 hours — prioritising:
-• New model launches or major capability upgrades (OpenAI, Anthropic, Google, Meta, Mistral, etc.)
-• Significant new AI tools, APIs, or developer frameworks
-• Important research breakthroughs with practical implications
-• Major industry moves, funding rounds, or regulatory news
+From the articles below, pick the {TOP_N_STORIES} most impactful AI stories from the past 24 hours.
 
-Format your response EXACTLY like this (WhatsApp-friendly, use emojis):
+Format EXACTLY like this (keep it very short — headlines only):
 
 🤖 *Daily AI Digest — {datetime.now().strftime("%d %b %Y")}*
 
-*1. [Story Title]*
-_Source: [Source Name]_
-[2-sentence explanation of what happened and why a software engineer should care]
-🔗 [link]
+1️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+2️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+3️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+4️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+5️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+6️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
 
-*2. [Story Title]*
-...repeat for all {TOP_N_STORIES} stories...
+💡 *Trend:* [One sentence on today's theme]
 
-━━━━━━━━━━━━━━━━━━━
-💡 *Today's Trend:* [One punchy sentence on the overall theme you're seeing across today's news]
-
-Keep it tight — the whole message should be readable in under 3 minutes.
+Total response MUST be under 1000 characters.
 
 ARTICLES:
 {articles_text}"""
