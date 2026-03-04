@@ -74,24 +74,22 @@ def summarise_with_claude(articles: list[dict]) -> str:
         for i, a in enumerate(articles)
     ])
 
-    prompt = f"""You are an AI news curator for a senior software engineer.
+    prompt = f"""From the articles below, pick the 3 most important AI news stories today.
 
-From the articles below, pick the {TOP_N_STORIES} most impactful AI stories from the past 24 hours.
+Reply in this EXACT format and nothing else:
 
-Format EXACTLY like this (keep it very short — headlines only):
+🤖 *AI News — {datetime.now().strftime("%d %b %Y")}*
 
-🤖 *Daily AI Digest — {datetime.now().strftime("%d %b %Y")}*
+1. [max 6 word headline]
+[url]
 
-1️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
-2️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
-3️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
-4️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
-5️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
-6️⃣ *[Headline]* — [One line, max 15 words] 🔗 [link]
+2. [max 6 word headline]
+[url]
 
-💡 *Trend:* [One sentence on today's theme]
+3. [max 6 word headline]
+[url]
 
-Total response MUST be under 1000 characters.
+💡 [One trend sentence, max 10 words]
 
 ARTICLES:
 {articles_text}"""
