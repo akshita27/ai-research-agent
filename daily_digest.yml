@@ -1,0 +1,38 @@
+name: Daily AI News WhatsApp Digest
+
+on:
+  schedule:
+    # Runs every day at 8:00 AM IST (2:30 AM UTC)
+    # Adjust cron to your preferred time:
+    #   8:00 AM IST  → 02:30 UTC
+    #   7:00 AM IST  → 01:30 UTC
+    #   9:00 AM IST  → 03:30 UTC
+    - cron: "30 2 * * *"
+
+  # Also lets you trigger it manually from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run AI News Bot
+        env:
+          ANTHROPIC_API_KEY:      ${{ secrets.ANTHROPIC_API_KEY }}
+          TWILIO_ACCOUNT_SID:     ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN:      ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_WHATSAPP_FROM:   ${{ secrets.TWILIO_WHATSAPP_FROM }}
+          MY_WHATSAPP_NUMBER:     ${{ secrets.MY_WHATSAPP_NUMBER }}
+        run: python ai_news_whatsapp.py
