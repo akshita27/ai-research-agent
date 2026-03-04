@@ -106,19 +106,25 @@ ARTICLES:
 # ─── SEND ─────────────────────────────────────────────────────────────────────
 
 def send_whatsapp(message: str, to_number: str) -> str:
-    """Send message via Twilio WhatsApp sandbox."""
     twilio_client = Client(
         os.environ["TWILIO_ACCOUNT_SID"],
         os.environ["TWILIO_AUTH_TOKEN"]
     )
 
+    # Hard truncate at last clean newline before 1590 chars
+    if len(message) > 1590:
+        message = message[:1590]
+        last_newline = message.rfind("\n")
+        if last_newline > 0:
+            message = message[:last_newline]
+
     msg = twilio_client.messages.create(
-        from_=f"whatsapp:{os.environ['TWILIO_WHATSAPP_FROM']}",  # e.g. +14155238886
-        to=f"whatsapp:{to_number}",                               # e.g. +919876543210
+        from_=f"whatsapp:{os.environ['TWILIO_WHATSAPP_FROM']}",
+        to=f"whatsapp:{to_number}",
         body=message
     )
-
     return msg.sid
+
 
 
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
